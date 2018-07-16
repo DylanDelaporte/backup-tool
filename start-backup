@@ -1,5 +1,6 @@
 #!/bin/bash
 
+TAG_LOG="BACKUP-TOOL"
 SCRIPT_PATH=$( cd $(dirname $0) ; pwd -P )
 
 DATE=$(date '+%Y-%m-%d_%H:%M:%S')
@@ -11,17 +12,17 @@ mkdir $BACKUP_DIR
 while IFS='' read -r line || [[ -n "$line" ]]; do
     if [[ -d $line ]]
     then
-	    echo "saving data from path: $line"
+	    echo "$TAG_LOG: saving directory $line"
 	    cp -r $line $BACKUP_DIR
     else
-	    echo "path: $line is not a directory"
+	    echo "$TAG_LOG: unable to find directory $line"
     fi
 done < "directories"
 
 if [ -z "$(ls -A $BACKUP_DIR)" ]; then
-	echo "nothing to backup"
+	echo "$TAG_LOG: nothing found to backup"
 else
-	echo "Not Empty"
+	echo "$TAG_LOG: zipping all backup into $BACKUP_DIR-$DATE.zip file"
 	zip -r $BACKUP_DIR-$DATE.zip $BACKUP_DIR
 fi
 
