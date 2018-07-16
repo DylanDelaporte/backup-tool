@@ -7,12 +7,7 @@ Backup a list of folders inside a zip
 ```bash
 git remote add origin https://github.com/DylanDelaporte/backup-tool.git
 cd backup-tool
-chmod +x start-backup
+chmod +x configure.sh
+./configure.sh #before executing you can modify cron task in this file
 ```
-2. Add absolute path of folders to backup inside `directories` file
-3. Run the script `./start-backup`
-4. Automate your backups with a cron task
-```bash
-crontab -e
-0 1 * * * /path/to/start-backup #everyday at 1am
-```
+2. Add absolute path of folders to backup inside `/usr/local/bin/directories` file
