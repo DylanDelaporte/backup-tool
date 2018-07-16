@@ -3,10 +3,14 @@
 TAG_LOG="BACKUP-TOOL"
 SCRIPT_PATH=$( cd $(dirname $0) ; pwd -P )
 
+BACKUPS_DIR=backups
+
 DATE=$(date '+%Y-%m-%d_%H:%M:%S')
 BACKUP_DIR="backup-$(date +%s)"
 
 cd $SCRIPT_PATH
+
+[ -d $BACKUPS_DIR ] || mkdir $BACKUPS_DIR
 mkdir $BACKUP_DIR
 
 while IFS='' read -r line || [[ -n "$line" ]]; do
@@ -24,6 +28,7 @@ if [ -z "$(ls -A $BACKUP_DIR)" ]; then
 else
 	echo "$TAG_LOG: zipping all backup into $BACKUP_DIR-$DATE.zip file"
 	zip -r $BACKUP_DIR-$DATE.zip $BACKUP_DIR
+	mv $BACKUP_DIR-$DATE.zip $BACKUPS_DIR
 fi
 
 rm -rf $BACKUP_DIR
