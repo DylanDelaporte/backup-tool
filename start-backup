@@ -21,7 +21,7 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
     else
 	    echo "$TAG_LOG: unable to find directory $line"
     fi
-done < "directories"
+done < "${SCRIPT_PATH}/directories"
 
 if [ -z "$(ls -A $BACKUP_DIR)" ]; then
 	echo "$TAG_LOG: nothing found to backup"
